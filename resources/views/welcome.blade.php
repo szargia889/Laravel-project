@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -38,11 +39,20 @@
 
             <div>
 
-                <p style="color:white; font-size: 32px;">¡Bienvenido a la aplicación, porfavor inicia sesión o regístrate si eres nuevo!</p>
+                
 
             </div>
             
         </div>
 
     </body>
-</html>
+</html> 
+-->
+@extends('layouts.app')
+
+@section('content')
+<title>Bienvenida</title>
+<div class="container">
+    <p style="font-size: 32px;">¡Bienvenido a la aplicación, porfavor inicia sesión o regístrate si eres nuevo!</p>
+</div>
+@endsection

@@ -7,9 +7,11 @@
     <title>Proyecto</title>
 </head>
 <body>
+
+    
     <h1>{{ $proyecto->nombre }}</h1>
     <ul>
-        <li></li>
+        <li><a href="{{$proyecto->path}}">PDF</a></li>
     </ul>  
 </body>
 </html>

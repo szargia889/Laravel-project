@@ -9,6 +9,7 @@ use App\Http\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use App\Models\User;
+use Laracasts\Flash\Flash;
 
 class ProyectoController extends Controller
 {
@@ -27,7 +28,7 @@ class ProyectoController extends Controller
         $usuarios = User::all();
         $proyectos = Proyecto::all();
 
-        return view('dashboard', compact('usuarios', 'proyectos'));
+        return view('home', compact('usuarios', 'proyectos'));
     }
 
     /**
@@ -51,15 +52,15 @@ class ProyectoController extends Controller
         
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'pdf' => ['required', 'file', 'mimes:pdf,doc,docx'],
-            'vm' => ['required', 'file'],
+            'pdf' => ['file', 'mimes:pdf,doc,docx'],
+            'vm' => ['file'],
             
             
         ]);
         $autor = Auth::User()->name;
         
 
-        if ($request->hasFile('pdf') and $request->hasFile('vm')) {
+        if ($request->hasFile('pdf') && $request->hasFile('vm')) {
             $path = $request->pdf->store('public');
 
             $project = Proyecto::create([
@@ -75,7 +76,7 @@ class ProyectoController extends Controller
             echo 'jodete';
         }
         
-        return 'Proyecto subido satisfactoriamente';
+        return redirect()->route('proyectos');
 
         
     }
@@ -99,7 +100,7 @@ class ProyectoController extends Controller
      */
     public function edit(Proyecto $proyecto)
     {
-        //
+        return view('editarProyecto', compact('proyecto'));
     }
 
     /**
@@ -122,7 +123,10 @@ class ProyectoController extends Controller
      */
     public function destroy(Proyecto $proyecto)
     {
-        //
+        $proyecto->delete();
+        Flash::error('Se ha eliminado el proyecto correctamente');
+        return redirect()->route('proyectos');
+        
     }
 
 }
