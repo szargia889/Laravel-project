@@ -18,33 +18,51 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
-
+*/
 require __DIR__.'/auth.php';
 
-                                    /* Creación de proyectos */
+Route::get('/proyectos', [ProyectoController::class, 'index'])->name('proyecto.index');
 
-Route::get('/subirProyecto', [ProyectoController::class, 'create'])->name('subirproyecto')->middleware('auth');
-
+Route::get('/subirProyecto', [ProyectoController::class, 'create'])->name('proyecto.create');
 Route::post('/subirProyecto', [ProyectoController::class, 'store']);
 
-/* Mostrar todos los proyectos y un único proyecto */
+Route::get('/proyecto/{proyecto}/edit', [ProyectoController::class, 'edit'])->name('proyecto.edit');
+Route::put('/proyecto/{proyecto}', [ProyectoController::class, 'update'])->name('proyecto.update');
 
-Route::get('/proyectos', [ProyectoController::class, 'index'])->name('proyectos');
+Route::get('/proyecto/{proyecto}/destroy', [ProyectoController::class, 'destroy'])->name('proyecto.destroy');
 
-Route::get('/proyecto/{proyecto}', [ProyectoController::class, 'show'])->name('mostrarProyecto');
+Route::get('/proyecto/{proyecto}', [ProyectoController::class, 'show'])->name('proyecto.show');
+
+
+
+
+
+
+/*Route::get('/proyectos', [ProyectoController::class, 'index'])->name('proyecto.index');
+
+Route::get('/subirProyecto', [ProyectoController::class, 'create'])->name('proyecto.create');
+
+Route::get('/proyecto/{proyecto}/edit', [ProyectoController::class, 'edit'])->name('proyecto.edit');
+
+Route::get('/proyecto/{proyecto}/destroy', [ProyectoController::class, 'destroy'])->name('proyecto.destroy');
+
+Route::put('/proyecto/{proyecto}', [ProyectoController::class, 'update'])->name('proyecto.update');
+
+Route::get('/proyecto/{proyecto}', [ProyectoController::class, 'show'])->name('proyecto.show');
+
+Route::post('/subirProyecto', [ProyectoController::class, 'store']);*/
+
+
 
 /* Edición de proyectos */
+// Route::resource('proyecto', ProyectoController::class);
 
-Route::get('/proyecto/{proyecto}/edit', [ProyectoController::class, 'edit'])->name('editarProyecto');
-
-Route::put('/proyecto/{proyecto}', [ProyectoController::class, 'update'])->name('actualizarProyecto');
 
 /* Eliminar un proyecto */
 
-Route::get('/proyecto/{proyecto}/destroy', [ProyectoController::class, 'destroy'])->name('eliminarProyecto');
 
 
 //Auth::routes();

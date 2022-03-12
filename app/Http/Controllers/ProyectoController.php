@@ -6,10 +6,12 @@ use App\Models\Proyecto;
 use App\Http\Requests\StoreProyectoRequest;
 use App\Http\Requests\UpdateProyectoRequest;
 use App\Http\Middleware;
+use App\Models\Categoria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use App\Models\User;
 use Laracasts\Flash\Flash;
+use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
@@ -23,12 +25,29 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $usuarios = User::all();
-        $proyectos = Proyecto::all();
+        if (Auth::user()->rol == 0) {
 
-        return view('home', compact('usuarios', 'proyectos'));
+            if ($request->filtro) {
+                $proyectos = Categoria::findOrFail($request->filtro)->proyectos->where('user_id', Auth::user()->id);
+            }else{
+                $proyectos = Auth::user()->proyectos;
+            }
+        }else {
+            if ($request->filtro) {
+                $proyectos = Categoria::findOrFail($request->filtro)->proyectos;
+            }else{
+                $proyectos = Proyecto::all();
+            }
+        }
+        
+            session()->flash('categoriaAnterior', $request->filtro);
+        
+        $categorias = Categoria::all();
+        
+        return view('home', compact('usuarios', 'proyectos', 'categorias'));
     }
 
     /**
@@ -38,7 +57,8 @@ class ProyectoController extends Controller
      */
     public function create()
     {
-        return view('subirProyecto');
+        $categorias = Categoria::all();
+        return view('subirProyecto', compact('categorias'));
     }
 
     /**
@@ -52,31 +72,44 @@ class ProyectoController extends Controller
         
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'descripcion'=>['required', 'string', 'max:255'],
             'pdf' => ['file', 'mimes:pdf,doc,docx'],
-            'vm' => ['file'],
-            
+            'vm' => ['file'],    
             
         ]);
         $autor = Auth::User()->name;
         
 
         if ($request->hasFile('pdf') && $request->hasFile('vm')) {
-            $path = $request->pdf->store('public');
+            $pdf = $request->pdf->store('public');
+            $vm = $request->vm->store('public');
 
-            $project = Proyecto::create([
+            $proyecto = new Proyecto([
                 'user_id' => Auth::User()->id, 
                 'nombre' => $request->name,
-                'pdf' => $request->pdf,
-                'vm' => $request->vm,
-                'autor' => $autor,
-                'path'=>$path
+                'descripcion' => $request->descripcion,
+                'pdf' => $pdf,
+                'vm' => $vm,
+                'autor' => $autor
+                               
             ]);
+            $proyecto->save();
             
+            foreach ($request->categoria as $categoria) {
+
+                $proyecto->categorias()->attach($categoria);
+
+            }
+            
+            
+            
+            
+
         }else{
-            echo 'jodete';
+            Flash::danger('No existen archivos');
         }
-        
-        return redirect()->route('proyectos');
+        Flash::success('Proyecto subido correctamente');
+        return redirect()->route('proyecto.index');
 
         
     }
@@ -112,7 +145,12 @@ class ProyectoController extends Controller
      */
     public function update(UpdateProyectoRequest $request, Proyecto $proyecto)
     {
-        //
+        $proyecto->nombre = $request->name;
+        $proyecto->descripcion = $request->descripcion;
+        $proyecto->save();
+
+        Flash::success('Se ha editado correctamente el proyecto');
+        return redirect()->route('proyecto.index');
     }
 
     /**
@@ -125,7 +163,7 @@ class ProyectoController extends Controller
     {
         $proyecto->delete();
         Flash::error('Se ha eliminado el proyecto correctamente');
-        return redirect()->route('proyectos');
+        return redirect()->route('proyecto.index');
         
     }
 

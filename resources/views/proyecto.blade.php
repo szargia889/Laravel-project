@@ -1,17 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto</title>
-</head>
-<body>
+@extends('layouts.app')
+@section('content')
 
-    
-    <h1>{{ $proyecto->nombre }}</h1>
-    <ul>
-        <li><a href="{{$proyecto->path}}">PDF</a></li>
-    </ul>  
-</body>
-</html>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">{{ $proyecto->nombre }}</h2>
+          <h4 class="card-subtitle mb-2 text-muted">{{ $proyecto->autor }}</h4>
+          <p class="card-text">{{ $proyecto->descripcion }}</p>
+          <a href="{{ Storage::url($proyecto->pdf) }}" class="btn btn-danger">PDF</a>
+          <a href="{{ Storage::url($proyecto->vm) }}" class="btn btn-primary">VM</a>
+        </div>
+    </div>
+    <a href="{{url()->previous()}}">
+        <span class="glyphicon glyphicon-menu-left"></span>Volver
+    </a>
+</div>
+
+
+@endsection

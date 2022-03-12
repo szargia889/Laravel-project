@@ -65,7 +65,7 @@
                             <label for="roles" class="col-md-4 col-form-label text-md-end">{{__('Rol: ')}}</label>
 
                             <div class="col-md-6">
-                                <select name="roles" id="roles">
+                                <select name="roles" id="roles" class="form-select">
                                     <option selected>Abre este menú</option>
                                     <option value="0">Alumno</option>
                                     <option value="1">Profesor</option>
@@ -74,7 +74,7 @@
                         </div>
                          
 
-                         <div id="grados" class="row mb-3 d-none">
+                         {{-- <div id="grados" class="row mb-3 d-none">
 
                             <label for="grado" class="col-md-4 col-form-label text-md-end">{{ __('Grado:') }}</label>
 
@@ -86,7 +86,7 @@
                                 </select>
 
                             </div>    
-                        </div>
+                        </div> --}}
                          
                         
 
@@ -96,6 +96,7 @@
                                     {{ __('Registrarse') }}
                                 </button>
                             </div>
+                            
                         </div>
                     </form>
                 </div>
@@ -104,7 +105,7 @@
     </div>
 </div>
 
-<script>
+{{-- <script>
    document.addEventListener("DOMContentLoaded", () => {
        const $grados = document.getElementById('grados');
        const $roles  = document.getElementById('roles');
@@ -117,5 +118,5 @@
            }
        });
    });
-</script>
+</script> --}}
 @endsection

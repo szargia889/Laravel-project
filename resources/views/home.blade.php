@@ -1,7 +1,6 @@
 @extends('layouts.app')
-@section('title')
-    <title>Inicio</title>
-@endsection
+@section('title', 'Inicio')
+
 @section('content')
 @php
     use App\Models\User;
@@ -14,6 +13,19 @@
             <div class="card">
                 <div class="card-header">{{ __('Proyectos') }}</div>
 
+                <form action="" method="GET" id="formCategoria">
+                    <select name="filtro" id="filtro" class="form-select" oninput="document.querySelector('#formCategoria').submit()" >
+                        <option value="">Todos</option>
+                        @foreach ($categorias as $categoria)
+                        
+                            <option {{session('categoriaAnterior') == $categoria->id?"selected":""}} value="{{ $categoria->id }}">{{$categoria->name}}</option>
+                   
+                        @endforeach
+                    </select>
+                    
+
+                </form>
+
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -21,38 +33,51 @@
                         </div>
                     @endif
 
-                    <a href="{{ route('subirproyecto') }}" class="btn btn-info">Subir nuevo proyecto +</a>
+                    
 
                     <table class="table">
-
+                        @if ($users->rol == 0)
+                        <a href="{{ route('proyecto.create') }}" class="btn btn-info">Subir nuevo proyecto +</a>
                         <thead>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Autor</th>
                             <th>Acción</th>
                         </thead>
+                        @else
+                        <thead>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Autor</th>
+                        </thead>
+                        @endif
                         <tbody>
                             @foreach ($proyectos as $proyecto)
                                 @if ($users->rol == 0)
-                                    @if ($proyecto->autor == $users->name)
-                                
-                                        
+                                                           
                                             <tr>
                                                 <th>{{ $proyecto->id }}</th>
-                                                <td>{{ $proyecto->nombre }}</td>
+                                                <td><a href="{{route('proyecto.show', $proyecto)}}">{{ $proyecto->nombre }}</a></td>
                                                 <td>{{ $proyecto->autor }}</td>
                                                 <td>
-                                                    <a href="{{ route('editarProyecto', $proyecto) }}" class="btn btn-warning">
+                                                    <a href="{{ route('proyecto.edit', $proyecto) }}" class="btn btn-warning">
                                                         <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                                     </a>
                                                 
-                                                    <a href="{{ route('eliminarProyecto', $proyecto->id) }}" onclick="return confirm('¿Seguro que quieres eliminarlo?')" class="btn btn-danger">
+                                                    <a href="{{ route('proyecto.destroy', $proyecto->id) }}" onclick="return confirm('¿Seguro que quieres eliminarlo?')" class="btn btn-danger">
                                                         <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                                                     </a>
                                                 </td>
                                             </tr>
+                                                                            
+                                @else
+                                    <tr>
+                                        <th>{{ $proyecto->id }}</th>
+                                        <td>{{ $proyecto->nombre }}</td>
+                                        <td>{{ $proyecto->autor }}</td>
                                         
-                                    @endif
+                                    </tr>
+                                
                                 @endif
                             @endforeach
                         </tbody>

@@ -12,14 +12,19 @@ class Proyecto extends Model
     protected $fillable = [
         'user_id',
         'nombre',
+        'descripcion',
         'pdf',
         'vm',
-        'autor',
-        'path'
+        'autor'       
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function categorias(){
+        return $this->belongsToMany('App\Models\Categoria');
+        
     }
 }

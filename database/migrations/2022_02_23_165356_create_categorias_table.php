@@ -13,20 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proyectos', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->string('nombre');
-            $table->string('pdf');
-            $table->string('vm');
-            $table->string('descripcion')->default("");
-            $table->string('autor');
-
+            $table->string('name');
+            
             $table->timestamps();
         });
     }
@@ -38,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proyectos');
+        Schema::dropIfExists('categorias');
     }
 };

@@ -13,19 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proyectos', function (Blueprint $table) {
+        Schema::create('categoria_proyecto', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->unsignedBigInteger('categoria_id');
+            $table->unsignedBigInteger('proyecto_id');
 
-            $table->string('nombre');
-            $table->string('pdf');
-            $table->string('vm');
-            $table->string('descripcion')->default("");
-            $table->string('autor');
+            $table->foreign('categoria_id') ->references('id')->on('categorias')->onDelete('cascade');
+            $table->foreign('proyecto_id')  ->references('id')->on('proyectos')->onDelete('cascade'); 
+            
 
             $table->timestamps();
         });
@@ -38,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proyectos');
+        Schema::dropIfExists('categoria_proyecto');
     }
 };
