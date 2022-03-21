@@ -13,6 +13,8 @@
             <div class="card">
                 <div class="card-header">{{ __('Proyectos') }}</div>
 
+                <!-- Filtro de la vista para proyectos -->
+
                 <form action="" method="GET" id="formCategoria">
                     <select name="filtro" id="filtro" class="form-select" oninput="document.querySelector('#formCategoria').submit()" >
                         <option value="">Todos</option>
@@ -34,7 +36,7 @@
                     @endif
 
                     
-
+                <!-- Creación de la tabla para visualizar los proyectos -->
                     <table class="table">
                         @if ($users->rol == 0)
                         <a href="{{ route('proyecto.create') }}" class="btn btn-info">Subir nuevo proyecto +</a>
@@ -73,7 +75,7 @@
                                 @else
                                     <tr>
                                         <th>{{ $proyecto->id }}</th>
-                                        <td>{{ $proyecto->nombre }}</td>
+                                        <td><a href="{{route('proyecto.show', $proyecto)}}">{{ $proyecto->nombre }}</a></td>
                                         <td>{{ $proyecto->autor }}</td>
                                         
                                     </tr>

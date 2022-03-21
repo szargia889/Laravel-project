@@ -13,6 +13,8 @@ class CategoriaSeeder extends Seeder
      *
      * @return void
      */
+
+    /* Creación de los datos estáticos de la tabla */ 
     public function run()
     {
         DB::table('categorias')->insert([

@@ -11,6 +11,8 @@ return new class extends Migration
      *
      * @return void
      */
+
+     /* Creación de los campos de la tabla de Usuarios */
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
@@ -20,7 +22,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('rol')->nullable();
-            $table->string('curso')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

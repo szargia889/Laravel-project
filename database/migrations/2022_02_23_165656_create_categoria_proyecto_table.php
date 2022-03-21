@@ -11,6 +11,9 @@ return new class extends Migration
      *
      * @return void
      */
+
+    /* Creación de los campos de la tabla de conexión */
+
     public function up()
     {
         Schema::create('categoria_proyecto', function (Blueprint $table) {

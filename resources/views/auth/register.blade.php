@@ -72,23 +72,7 @@
                                 </select>
                             </div>
                         </div>
-                         
-
-                         {{-- <div id="grados" class="row mb-3 d-none">
-
-                            <label for="grado" class="col-md-4 col-form-label text-md-end">{{ __('Grado:') }}</label>
-
-                            <div class="col-md-6">
-                                <select name="grados" id="grados">
-                                    <option selected>Abre este menú</option>
-                                    <option value="ASIR">ASIR</option>
-                                    <option value="SMR">SMR</option>
-                                </select>
-
-                            </div>    
-                        </div> --}}
-                         
-                        
+                                                
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
+<!-- Muestra los datos de proyecto específico -->
+
 <div class="container">
     <div class="card">
         <div class="card-body">

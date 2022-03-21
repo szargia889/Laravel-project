@@ -11,6 +11,8 @@ return new class extends Migration
      *
      * @return void
      */
+
+     /* Creación de los campos de la tabla de proyectos. */
     public function up()
     {
         Schema::create('proyectos', function (Blueprint $table) {
