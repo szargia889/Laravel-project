@@ -71,14 +71,23 @@
                         </div>
                         @foreach ($categorias as $categoria)
                             <div class="form-check">
-                                                                    
-                                <input class="form-check-input" type="checkbox" value="{{$categoria->id}}" id="categoria" name="categoria[]">
+                                    
                                 <label class="form-check-label" for="categoria">
                                     {{$categoria->name}}
                                 </label>
+
+                                <input class="form-check-input" type="checkbox" value="{{$categoria->id}}" id="categoria" name="categoria[]">
+                                
+
+                                
                                                                 
                             </div>
-                        @endforeach                                     
+                        @endforeach
+                        @error('categoria')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror                                     
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

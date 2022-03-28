@@ -1,3 +1,9 @@
+<?php
+
+use App\Models\User;
+$user=Auth::user();
+$comprobacion=isset($user);
+?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -13,19 +19,31 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+   
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('proyecto.index') }}">
+                <a class="navbar-brand" href="{{ route('proyecto.home') }}">
                     {{ 'Inicio' }}
+                </a>
+
+                @if ($comprobacion == true && $user->rol != 1)
+                <a class="navbar-brand" href="{{ route('proyecto.index') }}">
+                    {{ 'Mis proyectos' }}
+                </a>
+                @endif
+
+                <a class="navbar-brand" href="{{ route('proyecto.index2') }}">
+                    {{ 'Todos los proyectos' }}
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

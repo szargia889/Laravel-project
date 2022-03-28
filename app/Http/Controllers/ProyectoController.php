@@ -15,16 +15,6 @@ use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $usuarios = User::all();
@@ -47,7 +37,25 @@ class ProyectoController extends Controller
         
         $categorias = Categoria::all();
         
-        return view('home', compact('usuarios', 'proyectos', 'categorias'));
+        return view('misproyectos', compact('usuarios', 'proyectos', 'categorias'));
+    }
+
+    public function index2(Request $request)
+    {
+        $usuarios = User::all();
+        
+        if ($request->filtro) {
+            $proyectos = Categoria::findOrFail($request->filtro)->proyectos;
+        }else{
+            $proyectos = Proyecto::all();
+        }
+        
+        
+            session()->flash('categoriaAnterior', $request->filtro);
+        
+        $categorias = Categoria::all();
+        
+        return view('proyectos', compact('usuarios', 'proyectos', 'categorias'));
     }
 
     /**
@@ -59,6 +67,13 @@ class ProyectoController extends Controller
     {
         $categorias = Categoria::all();
         return view('subirProyecto', compact('categorias'));
+    }
+
+    public function home(){
+        $user = Auth::User();
+
+        return view ('home', compact('user'));
+
     }
 
     /**
@@ -74,7 +89,8 @@ class ProyectoController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'descripcion'=>['required', 'string', 'max:255'],
             'pdf' => ['file', 'mimes:pdf,doc,docx'],
-            'vm' => ['file'],    
+            'vm' => ['file'],
+            'categoria' => ['required']    
             
         ]);
         $autor = Auth::User()->name;
@@ -165,6 +181,14 @@ class ProyectoController extends Controller
         Flash::error('Se ha eliminado el proyecto correctamente');
         return redirect()->route('proyecto.index');
         
+    }
+
+    public function busqueda(Request $request)
+    {
+        $categorias = Categoria::all();
+        $proyectos = Proyecto::where('nombre','LIKE','%'.$request->busqueda.'%')->get();
+        
+        return view('proyectos', compact('proyectos', 'categorias'));
     }
 
 }
