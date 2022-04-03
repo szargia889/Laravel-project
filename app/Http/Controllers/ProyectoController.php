@@ -12,6 +12,7 @@ use Illuminate\Validation\Rules;
 use App\Models\User;
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProyectoController extends Controller
 {
@@ -177,6 +178,7 @@ class ProyectoController extends Controller
      */
     public function destroy(Proyecto $proyecto)
     {
+        Storage::delete([$proyecto->pdf,$proyecto->vm]);
         $proyecto->delete();
         Flash::error('Se ha eliminado el proyecto correctamente');
         return redirect()->route('proyecto.index');

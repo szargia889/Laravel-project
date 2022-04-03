@@ -12,10 +12,11 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Proyectos') }}</div>
+                <div class="card-body">
 
                 <!-- Filtro de la vista para proyectos -->
 
-                <form action="" method="GET" id="formCategoria">
+                <form action="" method="GET" id="formCategoria" class="mb-2">
                     <select name="filtro" id="filtro" class="form-select" oninput="document.querySelector('#formCategoria').submit()" >
                         <option value="">Todos</option>
                         @foreach ($categorias as $categoria)
@@ -30,7 +31,6 @@
 
                 
 
-                <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -41,7 +41,7 @@
                 <!-- Creación de la tabla para visualizar los proyectos -->
                     <table class="table">
                         @if ($users->rol == 0)
-                        <a href="{{ route('proyecto.create') }}" class="btn btn-info">Subir nuevo proyecto +</a>
+                        <a href="{{ route('proyecto.create') }}" class="btn btn-info"><i class="bi bi-plus-lg"></i> Subir nuevo proyecto</a>
                         <thead>
                             <th>ID</th>
                             <th>Nombre</th>
@@ -65,11 +65,11 @@
                                                 <td>{{ $proyecto->autor }}</td>
                                                 <td>
                                                     <a href="{{ route('proyecto.edit', $proyecto) }}" class="btn btn-warning">
-                                                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                                                        <i class="bi bi-wrench"></i>
                                                     </a>
                                                 
                                                     <a href="{{ route('proyecto.destroy', $proyecto->id) }}" onclick="return confirm('¿Seguro que quieres eliminarlo?')" class="btn btn-danger">
-                                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                                        <i class="bi bi-trash-fill"></i>
                                                     </a>
                                                 </td>
                                             </tr>

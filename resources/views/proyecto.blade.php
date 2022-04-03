@@ -4,6 +4,10 @@
 <!-- Muestra los datos de proyecto específico -->
 
 <div class="container">
+    <a href="{{url()->previous()}}" class="btn btn-outline-dark mb-1">
+        <i class="bi bi-arrow-90deg-left"></i> Volver
+    </a>
+
     <div class="card">
         <div class="card-body">
           <h2 class="card-title">{{ $proyecto->nombre }}</h2>
@@ -13,9 +17,7 @@
           <a href="{{ Storage::url($proyecto->vm) }}" class="btn btn-primary">VM</a>
         </div>
     </div>
-    <a href="{{url()->previous()}}">
-        <span class="glyphicon glyphicon-menu-left"></span>Volver
-    </a>
+    
 </div>
 
 

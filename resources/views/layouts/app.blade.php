@@ -32,20 +32,27 @@ $comprobacion=isset($user);
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                @guest
+                 
+                     
+                @else
+                     
+                    
                 <a class="navbar-brand" href="{{ route('proyecto.home') }}">
                     {{ 'Inicio' }}
                 </a>
-
+                
                 @if ($comprobacion == true && $user->rol != 1)
                 <a class="navbar-brand" href="{{ route('proyecto.index') }}">
                     {{ 'Mis proyectos' }}
                 </a>
                 @endif
-
+                
                 <a class="navbar-brand" href="{{ route('proyecto.index2') }}">
                     {{ 'Todos los proyectos' }}
                 </a>
-
+                
+                @endguest
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
