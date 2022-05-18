@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class RegistroController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all();
-        return view('usuarios', compact('usuarios'));
+        //
     }
 
     /**
@@ -27,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('registro');
     }
 
     /**
@@ -38,7 +37,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email'=>['required', 'string', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
+         
+        ]);
         
+
+        $user = new User([
+            'name' => $request->name, 
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+                           
+        ]);
+
+        $user->save();
+        
+        Password::sendResetLink(
+            ["email" => $user->email]
+        );
+
+        return redirect()->route('proyecto.index');
     }
 
     /**
@@ -47,9 +67,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $usuario)
+    public function show($id)
     {
-        return view('usuario', compact('usuario'));
+        //
     }
 
     /**
@@ -58,9 +78,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $usuario)
+    public function edit($id)
     {
-        return view('editarUsuario', compact('usuario'));
+        //
     }
 
     /**
@@ -70,14 +90,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $usuario)
+    public function update(Request $request, $id)
     {
-        $usuario->name = $request->name;
-        $usuario->email = $request->email;
-        $usuario->save();
-
-        Flash::success('Se ha editado correctamente el usuario');
-        return redirect()->route('usuarios.index');
+        //
     }
 
     /**
@@ -86,17 +101,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $usuario)
+    public function destroy($id)
     {
-        $usuario->delete();
-        Flash::error('Se ha eliminado el usuario correctamente');
-        return redirect()->route('usuarios.index');
-    }
-
-    public function mandaemail(Request $request)
-    {
-        $usr = $request->user;
-        $usuario = User::findOrFail($usr);
-        $usuario->SendEmailVerificationNotification();
+        //
     }
 }

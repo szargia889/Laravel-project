@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,8 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 */
+
+/* RUTAS SOBRE LOS PROYECTOS */
 require __DIR__.'/auth.php';
 Route::get('/busqueda', [ProyectoController::class, 'busqueda'])->name('proyecto.busqueda')->middleware(['auth']);
 Route::get('/home', [ProyectoController::class, 'home'])->name('proyecto.home')->middleware(['auth']);
@@ -39,10 +43,22 @@ Route::get('/proyecto/{proyecto}/destroy', [ProyectoController::class, 'destroy'
 
 Route::get('/proyecto/{proyecto}', [ProyectoController::class, 'show'])->name('proyecto.show')->middleware(['auth']);
 
+/* RUTAS SOBRE EL REGISTRO */
 
 
+Route::get('/registro', [RegistroController::class, 'create'])->name('register.create')->middleware(['auth']);
+Route::post('/registro', [RegistroController::class, 'store']);
 
+/* RUTAS SOBRE LOS USUARIOS */
 
+Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index')->middleware(['auth']);
+
+Route::get('/usuarios/{usuario}/edit', [UserController::class, 'edit'])->name('usuarios.edit')->middleware(['auth']);
+Route::put('/usuarios/{usuario}', [UserController::class, 'update'])->name('usuarios.update')->middleware(['auth']);
+
+Route::get('/usuarios/{usuario}/destroy', [UserController::class, 'destroy'])->name('usuarios.destroy')->middleware(['auth']);
+
+Route::get('/usuarios/{usuario}', [UserController::class, 'show'])->name('usuarios.show')->middleware(['auth']);
 
 /*Route::get('/proyectos', [ProyectoController::class, 'index'])->name('proyecto.index');
 

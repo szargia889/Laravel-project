@@ -37,7 +37,7 @@ $comprobacion=isset($user);
                      
                 @else
                      
-                    
+       
                 <a class="navbar-brand" href="{{ route('proyecto.home') }}">
                     {{ 'Inicio' }}
                 </a>
@@ -51,6 +51,21 @@ $comprobacion=isset($user);
                 <a class="navbar-brand" href="{{ route('proyecto.index2') }}">
                     {{ 'Todos los proyectos' }}
                 </a>
+
+                @if ($comprobacion == true && $user->rol != 0)
+                
+                <a class="navbar-brand" href="{{ route('usuarios.index') }}">
+                    {{ 'Ver usuarios' }}
+                </a>
+
+                <a class="navbar-brand" href="{{ route('register.create') }}">
+                    {{ 'Registrar usuario' }}
+                </a>
+                
+                @endif
+                
+
+                
                 
                 @endguest
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -73,11 +88,11 @@ $comprobacion=isset($user);
                                 </li>
                             @endif
 
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Resgistrarse') }}</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
