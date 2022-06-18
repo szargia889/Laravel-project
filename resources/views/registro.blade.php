@@ -65,11 +65,13 @@
                             <label for="roles" class="col-md-4 col-form-label text-md-end">{{__('Rol: ')}}</label>
 
                             <div class="col-md-6">
-                                <select name="roles" id="roles" class="form-select">
-                                    <option selected>Abre este menú</option>
+                                <select name="roles" id="roles" class="form-select" @error('roles') is-invalid @enderror required>
+                                    <option selected value="">Abre este menú</option>
                                     <option value="0">Alumno</option>
                                     <option value="1">Profesor</option>
                                 </select>
+
+                            
                             </div>
                         </div>
                                                 

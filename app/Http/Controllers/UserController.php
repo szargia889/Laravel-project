@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -16,8 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all();
+        $usuarios = User::where('rol', 0)->get();
         return view('usuarios', compact('usuarios'));
+        
     }
 
     /**
@@ -74,6 +76,7 @@ class UserController extends Controller
     {
         $usuario->name = $request->name;
         $usuario->email = $request->email;
+        $usuario->password = Hash::make($request->password);
         $usuario->save();
 
         Flash::success('Se ha editado correctamente el usuario');

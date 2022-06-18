@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Proyectos') }}</div>
+                <div class="card-header">{{ __('Usuarios') }}</div>
                 <div class="card-body">
 
                     @if (session('status'))
@@ -22,9 +22,11 @@
 
                     
                 <!-- Creación de la tabla para visualizar los usuarios -->
+                
                     <table class="table">
                         
                         <a href="{{ route('register.create') }}" class="btn btn-info"><i class="bi bi-plus-lg"></i> Crear alumno</a>
+                        
                         <thead>
                             <th>ID</th>
                             <th>Nombre</th>
@@ -32,7 +34,10 @@
                         </thead>
                         
                         <tbody>
-                            @foreach ($usuarios as $usuario)                                          
+                            
+                            
+                            @foreach ($usuarios as $usuario)
+                                              
                                 <tr>
                                                 <th>{{ $usuario->id }}</th>
                                                 <td><a href="{{route('usuarios.show', $usuario)}}">{{ $usuario->name }}</a></td>
@@ -47,11 +52,11 @@
                                                     </a>
                                                 </td>
                                             </tr>
-                                                                                                            
+                                                                                                        
                             @endforeach
+                            
                         </tbody>
                     </table>
-                
                 </div>
             </div>
         </div>

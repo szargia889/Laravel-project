@@ -41,6 +41,8 @@ class RegistroController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email'=>['required', 'string', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
+            'rol'=>['boolean']
+        
          
         ]);
         
@@ -48,7 +50,8 @@ class RegistroController extends Controller
         $user = new User([
             'name' => $request->name, 
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'rol' => $request->roles
                            
         ]);
 
@@ -58,7 +61,7 @@ class RegistroController extends Controller
             ["email" => $user->email]
         );
 
-        return redirect()->route('proyecto.index');
+        return redirect()->route('usuarios.index');
     }
 
     /**
