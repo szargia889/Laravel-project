@@ -58,6 +58,7 @@
                             <th>Autor</th>
                         </thead>
                         @endif
+                        @if($users->rol == 1)
                         <tbody>
                             @foreach ($proyectos as $proyecto)
 
@@ -66,12 +67,32 @@
                                                 <th>{{ $proyecto->id }}</th>
                                                 <td><a href="{{route('proyecto.show', $proyecto)}}">{{ $proyecto->nombre }}</a></td>
                                                 <td>{{ $proyecto->autor }}</td>
+                                                <td>
+                                                    <a href="{{ route('proyecto.destroy', $proyecto->id) }}" onclick="return confirm('¿Seguro que quieres eliminarlo?')" class="btn btn-danger">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </a>
+                                                </td>
 
                                             </tr>
                                                                             
 
                             @endforeach
+                        </tbody>    
+                        @else
+                        <tbody>
+                            @foreach ($proyectos as $proyecto)
+
+                                                           
+                                            <tr>
+                                                <th>{{ $proyecto->id }}</th>
+                                                <td><a href="{{route('proyecto.show', $proyecto)}}">{{ $proyecto->nombre }}</a></td>
+                                                <td>{{ $proyecto->autor }}</td>
+                                            </tr>
+                                                                            
+
+                            @endforeach
                         </tbody>
+                        @endif
                     </table>
                     
                 
